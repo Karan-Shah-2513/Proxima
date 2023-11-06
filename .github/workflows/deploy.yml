@@ -20,7 +20,6 @@ jobs:
           okteto context use https://cloud.okteto.com --token ${{ secrets.OKTETO_TOKEN }}
           
           cd client
-          npm install --force
           echo "${{ secrets.CLIENT_ENV_FILE }}" > .env
           okteto deploy --build
           
@@ -29,10 +28,3 @@ jobs:
           echo "${{ secrets.SERVER_ENV_FILE }}" > .env
           okteto deploy --build 
           
-        
-    
-          
-          
-    
-  
-  
