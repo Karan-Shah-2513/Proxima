@@ -2,13 +2,12 @@ const Meeting = require("../models/meeting.model");
 const Attendence = require("../models/attendence.model");
 const shortid = require("shortid");
 
-
 const getMyMeetings = async (req, res, next) => {
   try {
     const { userWalletAddress } = req.params;
     const meetings = await Meeting.find({
       hostWalletAddress: userWalletAddress,
-      status : "scheduled"
+      status: "scheduled",
     });
     res.status(200).json({
       success: true,

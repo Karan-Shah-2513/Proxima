@@ -11,7 +11,7 @@ const transcriptRoutes = require("./routes/transcript.routes");
 
 const { notFound, errorHandler } = require("./middleware/error.middleware");
 
-const {IO_PORT, SERVER_PORT, FRONTEND_SERVER} = require('./config.js')
+const { IO_PORT, SERVER_PORT, FRONTEND_SERVER } = require("./config.js");
 
 // connect to the mongoDB collection
 const connectDB = require("./db");
@@ -21,7 +21,7 @@ connectDB();
 const io = require("socket.io")(IO_PORT, {
   cors: {
     credentials: true,
-    origin: FRONTEND_SERVER,
+    origin: "*",
     transports: ["websocket", "polling"],
     methods: ["GET", "POST"],
   },
@@ -66,9 +66,6 @@ io.on("connection", (socket) => {
   });
 });
 
-
-
-
 async function findOrCreateDocument(id) {
   if (id == null) return;
 
@@ -98,7 +95,7 @@ app.use(express.json({ limit: "5mb" }));
 app.use(
   cors({
     credentials: true,
-    origin: FRONTEND_SERVER,
+    origin: "*",
     transports: ["websocket", "polling"],
     methods: ["GET", "POST"],
     allowEIO3: true,
@@ -112,11 +109,9 @@ app.use("/api/meeting", meetingRoutes);
 app.use("/api/file", fileRoutes);
 app.use("/api/transcript", transcriptRoutes);
 
-
 app.use(notFound);
 app.use(errorHandler);
 
 app.listen(SERVER_PORT, () => {
   console.log(`http://localhost:${SERVER_PORT}`);
 });
-
